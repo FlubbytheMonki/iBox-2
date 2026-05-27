@@ -1,0 +1,36 @@
+name: Build iBox Legacy IPA
+
+on:
+  workflow_dispatch: # Allows you to manually click a button to start the build
+
+jobs:
+  build:
+    runs-on: macos-13 # Triggers a virtual Mac computer in the cloud
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Set up Xcode Version
+        run: sudo xcode-select -s /Applications/Xcode_14.3.1.app
+
+      - name: Compile App Binary
+        run: |
+          xcodebuild -project iBox.xcodeproj \
+                     -scheme iBox \
+                     -configuration Release \
+                     -sdk iphoneos \
+                     CODE_SIGNING_ALLOWED=NO \
+                     clean build
+
+      - name: Create Unsigned IPA Package
+        run: |
+          mkdir -p Payload
+          mv build/Release-iphoneos/iBox.app Payload/
+          zip -r iBox_unsigned.ipa Payload/
+
+      - name: Upload Finished File
+        uses: actions/upload-artifact@v4
+        with:
+          name: ibox-ios9-ipa
+          path: iBox_unsigned.ipa
