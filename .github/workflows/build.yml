@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-13 # Triggers a virtual Mac computer in the cloud
+    runs-on: macos-15-intel# Triggers a virtual Mac computer in the cloud
 
     steps:
       - name: Checkout Source Code
