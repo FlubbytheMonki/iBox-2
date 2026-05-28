@@ -13,17 +13,18 @@ jobs:
 
       - name: Compile App Binary
         run: |
-          xcodebuild -project iBox.xcodeproj \
+          xcodebuild -project iBox/iBox.xcodeproj \
                      -scheme iBox \
                      -configuration Release \
                      -sdk iphoneos \
                      CODE_SIGNING_ALLOWED=NO \
+                     CONFIGURATION_BUILD_DIR=$GITHUB_WORKSPACE/build \
                      clean build
 
       - name: Create Unsigned IPA Package
         run: |
           mkdir -p Payload
-          mv build/Release-iphoneos/iBox.app Payload/
+          mv build/iBox.app Payload/
           zip -r iBox_unsigned.ipa Payload/
 
       - name: Upload Finished File
