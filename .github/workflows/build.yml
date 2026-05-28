@@ -18,6 +18,9 @@ jobs:
                      -configuration Release \
                      -sdk iphoneos \
                      CODE_SIGNING_ALLOWED=NO \
+                     ONLY_ACTIVE_ARCH=NO \
+                     TARGETED_DEVICE_FAMILY="2" \
+                     IPHONEOS_DEPLOYMENT_TARGET=9.0 \
                      CONFIGURATION_BUILD_DIR=$GITHUB_WORKSPACE/build \
                      clean build
 
